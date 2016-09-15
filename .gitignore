@@ -18,3 +18,7 @@ target/
 .classpath
 .project
 .settings/
+
+# gradle
+.gradle/
+build/
