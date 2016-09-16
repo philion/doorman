@@ -1,4 +1,4 @@
-package com.acmerocket;
+package com.acmerocket.doorman;
 
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
@@ -21,9 +21,7 @@ public class DoormanApplication extends Application<DoormanConfiguration> {
     }
 
     @Override
-    public void run(final DoormanConfiguration configuration,
-                    final Environment environment) {
+    public void run(final DoormanConfiguration configuration, final Environment environment) {
         // TODO: implement application
     }
-
 }

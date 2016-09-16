@@ -1,4 +1,4 @@
 logging:
   level: INFO
   loggers:
-    com.acmerocket: DEBUG
+    com.acmerocket.doorman: DEBUG
