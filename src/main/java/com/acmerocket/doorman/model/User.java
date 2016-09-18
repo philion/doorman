@@ -15,28 +15,41 @@
  */
 package com.acmerocket.doorman.model;
 
+import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Id;
+
+import com.acmerocket.doorman.util.Utils;
+
 /**
  * @author philion
  *
  */
+@Entity("users")
 public class User implements Identifiable {
+    @Id
+    private String id;
+    
+    private String email;
 
-	/* (non-Javadoc)
-	 * @see com.acmerocket.doorman.model.Identifiable#getId()
-	 */
 	@Override
 	public String getId() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.id;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.acmerocket.doorman.model.Identifiable#setId(java.lang.String)
-	 */
 	@Override
 	public void setId(String id) {
-		// TODO Auto-generated method stub
-		
+	    this.id = id;
 	}
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
+    public String toString() {
+        return Utils.toJson(this);
+    }
 }

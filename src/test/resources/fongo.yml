@@ -1,0 +1,13 @@
+logging:
+  level: warn
+  loggers:
+    com.acmerocket: debug    
+    org.mongodb: debug
+    com.github.fakemongo: debug
+  appenders:
+    - type: console
+      logFormat: "%d{yyyy-MM-dd HH:mm:ss} %-5level %42.42logger{42} - %msg%n"
+
+mongo:
+  url: fongo://test
+

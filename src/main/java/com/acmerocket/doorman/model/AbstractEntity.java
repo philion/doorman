@@ -4,8 +4,8 @@ import java.util.Date;
 
 import org.mongodb.morphia.mapping.Mapper;
 
-import com.acmerocket.doorman.EntityUtils;
-import com.acmerocket.doorman.Utils;
+import com.acmerocket.doorman.util.EntityUtils;
+import com.acmerocket.doorman.util.Utils;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public abstract class AbstractEntity implements Identifiable {

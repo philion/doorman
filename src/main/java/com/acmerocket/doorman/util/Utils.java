@@ -1,4 +1,4 @@
-package com.acmerocket.doorman;
+package com.acmerocket.doorman.util;
 
 import java.io.IOException;
 import java.util.Map;

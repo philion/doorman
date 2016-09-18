@@ -15,13 +15,50 @@
  */
 package com.acmerocket.doorman.resources;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import javax.ws.rs.GET;
+import javax.ws.rs.NotFoundException;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.acmerocket.doorman.model.User;
+import com.acmerocket.doorman.services.UserService;
 
 /**
  * @author philion
- *
  */
+@Singleton
 @Path("/users")
 public class UsersResource {
+    private static final Logger LOG = LoggerFactory.getLogger(UsersResource.class);
 
+    private final UserService users;
+    
+    @Inject
+    public UsersResource(UserService service) {
+        this.users = service;
+    }
+    
+    @GET @Path("/{id}")
+    public User getUser(@PathParam("id") String id) {
+        LOG.debug("GET user id={}", id);
+        User response = this.users.get(id);
+        if (response == null) {
+            throw new NotFoundException();
+        }
+        else {
+            return this.users.get(id);
+        }
+    }
+    
+    @POST 
+    public String createUser(User user) {
+        LOG.debug("POST user user={}", user);
+        return this.users.create(user);
+    }
 }

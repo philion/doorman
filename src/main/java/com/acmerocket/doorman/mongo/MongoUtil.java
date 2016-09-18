@@ -1,4 +1,4 @@
-package com.acmerocket.doorman.dao;
+package com.acmerocket.doorman.mongo;
 
 import java.util.List;
 import java.util.Map;
@@ -9,8 +9,8 @@ import org.mongodb.morphia.query.QueryImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.acmerocket.doorman.Dates;
-import com.acmerocket.doorman.Utils;
+import com.acmerocket.doorman.util.Dates;
+import com.acmerocket.doorman.util.Utils;
 import com.google.common.collect.Sets;
 
 

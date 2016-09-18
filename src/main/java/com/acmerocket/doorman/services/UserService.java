@@ -15,13 +15,21 @@
  */
 package com.acmerocket.doorman.services;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
+
+import com.acmerocket.doorman.model.User;
+import com.acmerocket.doorman.mongo.AbstractMorphiaService;
+import com.acmerocket.doorman.mongo.MongoInstance;
 
 /**
  * @author philion
  *
  */
 @Singleton
-public class UserService {
-
+public class UserService extends AbstractMorphiaService<User> {
+    @Inject
+    public UserService(MongoInstance mongo) {
+        super(mongo);
+    }
 }

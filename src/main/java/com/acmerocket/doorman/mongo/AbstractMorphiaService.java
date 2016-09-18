@@ -1,4 +1,4 @@
-package com.acmerocket.doorman.dao;
+package com.acmerocket.doorman.mongo;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
@@ -14,7 +14,7 @@ import javax.ws.rs.core.MultivaluedMap;
 import org.apache.commons.collections4.MapUtils;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.mapping.Mapper;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.QueryResults;
 import org.mongodb.morphia.query.UpdateOperations;
@@ -22,19 +22,17 @@ import org.mongodb.morphia.query.UpdateResults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.acmerocket.doorman.EntityUtils;
 import com.acmerocket.doorman.model.AbstractEntity;
 import com.acmerocket.doorman.model.Identifiable;
+import com.acmerocket.doorman.model.Service;
+import com.acmerocket.doorman.util.EntityUtils;
 import com.google.common.base.Function;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.mongodb.WriteResult;
 
-
-
-public abstract class MorphiaResourceManager<T extends Identifiable> implements Service<T> {
-    private static final Logger LOG = LoggerFactory.getLogger(MorphiaResourceManager.class);
+public abstract class AbstractMorphiaService<T extends Identifiable> implements Service<T> {
+    private static final Logger LOG = LoggerFactory.getLogger(AbstractMorphiaService.class);
     
     private static final Function<Field, String> FIELD_TO_STRING = new Function<Field, String>() {
         @Override
@@ -46,14 +44,13 @@ public abstract class MorphiaResourceManager<T extends Identifiable> implements 
     private final Datastore datastore;
     private final Class<T> entityClazz;
     private final List<String> validFields;
-    private final List<String> systemFields;
 
     @SuppressWarnings("unchecked")
-    public MorphiaResourceManager(MongoWrapper mongo) {
+    public AbstractMorphiaService(MongoInstance mongo) {
         this.entityClazz = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
         this.datastore = mongo.getDatastore();
+        //LOG.info("datastore: {}", datastore);
         this.validFields = Lists.transform(Arrays.asList(entityClazz.getDeclaredFields()), FIELD_TO_STRING);
-        this.systemFields = ImmutableList.of(AbstractEntity.CREATED, AbstractEntity.UPDATED, EntityUtils.getFieldAnnotatedWith(Id.class, entityClazz).getName());
     }
 
     private Class<T> entityClass() {
@@ -83,7 +80,7 @@ public abstract class MorphiaResourceManager<T extends Identifiable> implements 
     }
 
     protected Query<T> query(String id) {
-        return datastore.createQuery(entityClass()).field(AbstractEntity.ID).equal(id);
+        return datastore.createQuery(entityClass()).field(Mapper.ID_KEY).equal(id);
     }
 
     @Override
@@ -134,7 +131,7 @@ public abstract class MorphiaResourceManager<T extends Identifiable> implements 
         int fieldCount = 0;
         for (Map.Entry<String, ?> entry : fields.entrySet()) {
             String field = entry.getKey();
-            if (validFields.contains(field) && !systemFields.contains(field)) {
+            if (validFields.contains(field) /*&& !systemFields.contains(field)*/) {
                 Object value = entry.getValue();
                 if (value != null) {
                     updateOps.set(field, value);
@@ -220,10 +217,12 @@ public abstract class MorphiaResourceManager<T extends Identifiable> implements 
         return ids;
     }
 
-//    @Override
-//    public boolean exists(String id) {
-//        return datastore().exists(new Key<>(entityClass(), id)) != null;
-//    }
+    @Override
+    public boolean exists(String id) {
+        //return datastore().exists(new Key<>(entityClass(), id)) != null;
+        // FIXME
+        return false;
+    }
 
     public boolean touch(String id, boolean create) {
         Query<T> query = query(id);

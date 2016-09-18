@@ -1,4 +1,4 @@
-package com.acmerocket.doorman.dao;
+package com.acmerocket.doorman.model;
 
 import java.util.Collection;
 import java.util.List;
@@ -6,8 +6,6 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.ws.rs.core.MultivaluedMap;
-
-import com.acmerocket.doorman.model.Identifiable;
 
 
 public interface Service<R extends Identifiable> {

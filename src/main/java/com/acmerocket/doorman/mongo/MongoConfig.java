@@ -1,4 +1,4 @@
-package com.acmerocket.doorman.dao;
+package com.acmerocket.doorman.mongo;
 
 import org.hibernate.validator.constraints.NotEmpty;
 

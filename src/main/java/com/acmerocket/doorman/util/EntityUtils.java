@@ -1,4 +1,4 @@
-package com.acmerocket.doorman;
+package com.acmerocket.doorman.util;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
