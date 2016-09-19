@@ -18,6 +18,8 @@ package com.acmerocket.doorman.services;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import org.bson.types.ObjectId;
+
 import com.acmerocket.doorman.model.User;
 import com.acmerocket.doorman.mongo.AbstractMorphiaService;
 import com.acmerocket.doorman.mongo.MongoInstance;
@@ -31,5 +33,9 @@ public class UserService extends AbstractMorphiaService<User> {
     @Inject
     public UserService(MongoInstance mongo) {
         super(mongo);
+    }
+    
+    public User get(String id) {
+        return this.datastore().get(User.class, new ObjectId(id));
     }
 }

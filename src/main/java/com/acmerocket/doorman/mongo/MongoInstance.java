@@ -2,8 +2,8 @@ package com.acmerocket.doorman.mongo;
 
 import org.mongodb.morphia.Datastore;
 
-import com.mongodb.DB;
 import com.mongodb.MongoClient;
+import com.mongodb.client.MongoDatabase;
 
 public interface MongoInstance {
 
@@ -11,7 +11,7 @@ public interface MongoInstance {
 
     public MongoClient getClient();
     
-    public DB getDB();
+    public MongoDatabase getDB();
     
     public void ensureIndexes();
 

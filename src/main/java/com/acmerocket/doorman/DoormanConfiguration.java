@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.Configuration;
 
 public class DoormanConfiguration extends Configuration {
-    private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(DoormanConfiguration.class);
+    //private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(DoormanConfiguration.class);
 
     @JsonProperty @NotNull @Valid 
     private MongoConfig mongo;
@@ -18,7 +18,6 @@ public class DoormanConfiguration extends Configuration {
 	 * @return
 	 */
 	public MongoConfig getMongo() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.mongo;
 	}
 }

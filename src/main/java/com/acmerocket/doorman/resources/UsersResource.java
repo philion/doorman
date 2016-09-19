@@ -22,6 +22,8 @@ import javax.ws.rs.NotFoundException;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,16 +46,22 @@ public class UsersResource {
         this.users = service;
     }
     
-    @GET @Path("/{id}")
+    @GET @Path("/{id}") @Produces(MediaType.APPLICATION_JSON)
     public User getUser(@PathParam("id") String id) {
-        LOG.debug("GET user id={}", id);
-        User response = this.users.get(id);
-        if (response == null) {
+        User user = null;
+        try {
+            user = this.users.get(id);
+            
+            LOG.debug("#### found {}", user);
+        }
+        catch (IllegalArgumentException ex) {
             throw new NotFoundException();
         }
-        else {
-            return this.users.get(id);
+        if (user == null) {
+            throw new NotFoundException();
         }
+                
+        return user;
     }
     
     @POST 

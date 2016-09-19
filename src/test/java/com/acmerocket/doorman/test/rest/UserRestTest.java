@@ -2,19 +2,16 @@ package com.acmerocket.doorman.test.rest;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
-import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.junit.ClassRule;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.acmerocket.doorman.DoormanApplication;
 import com.acmerocket.doorman.DoormanConfiguration;
@@ -24,14 +21,12 @@ import io.dropwizard.testing.ResourceHelpers;
 import io.dropwizard.testing.junit.DropwizardAppRule;
 
 public class UserRestTest {
-    private static final Logger LOG = LoggerFactory.getLogger(UserRestTest.class);
+    //private static final Logger LOG = LoggerFactory.getLogger(UserRestTest.class);
 
     @ClassRule
-    public static final DropwizardAppRule<DoormanConfiguration> APP = new DropwizardAppRule<>(DoormanApplication.class,
-            ResourceHelpers.resourceFilePath("fongo.yml"));
-    
-    //private static final JerseyClientBuilder BUILDER = new JerseyClientBuilder(APP.getEnvironment());
-    
+    public static final DropwizardAppRule<DoormanConfiguration> APP = 
+        new DropwizardAppRule<>(DoormanApplication.class, ResourceHelpers.resourceFilePath("local.yml"));
+        
     @Test
     public void test404() {
         Response response = target().path("/users/666").request().get();         
@@ -42,9 +37,9 @@ public class UserRestTest {
     @Test
     public void testCreateAndGet() {
         User user = new User();
-        user.setEmail("sample@sample.com");
-        Response response = target().path("/users").request(MediaType.TEXT_PLAIN_TYPE).post(Entity.json(user));
-        //LOG.info("response: {}", response);
+        String email = TestUtils.randomEmail();
+        user.setEmail(email);
+        Response response = target().path("/users").request().post(Entity.json(user));
 
         assertEquals(200, response.getStatus());
         // get the entity...
@@ -53,13 +48,13 @@ public class UserRestTest {
         Response getResponse = target().path("/users/" + id).request().get();  
         assertEquals(200, getResponse.getStatus());
         User newUser = getResponse.readEntity(User.class);
-        LOG.info("### {}", newUser);
+        assertNotNull(newUser);
+        assertEquals(email, newUser.getEmail());
     }
     
     // TODO: Build abstraction for this and client creation
     private static WebTarget target() {
-        Client client = ClientBuilder.newClient();
-        return client.target(endpoint());
+        return ClientBuilder.newClient().target(endpoint());
     }
     private static String endpoint() {
         StringBuilder builder = new StringBuilder();

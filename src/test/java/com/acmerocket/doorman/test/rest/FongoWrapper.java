@@ -6,8 +6,8 @@ import org.mongodb.morphia.Morphia;
 import com.acmerocket.doorman.mongo.MongoInstance;
 import com.codahale.metrics.health.HealthCheck;
 import com.github.fakemongo.Fongo;
-import com.mongodb.DB;
 import com.mongodb.MongoClient;
+import com.mongodb.client.MongoDatabase;
 
 
 public class FongoWrapper implements MongoInstance {
@@ -19,7 +19,7 @@ public class FongoWrapper implements MongoInstance {
     
     private final MongoClient client;
     private final Datastore datastore;
-    private final DB db;
+    private final MongoDatabase db;
 
     private FongoWrapper() {
     	this(DB_NAME);
@@ -35,7 +35,7 @@ public class FongoWrapper implements MongoInstance {
         this.datastore = morphia.createDatastore(this.client, dbName);
         datastore.ensureIndexes();
 
-        this.db = fongo.getDB(dbName);
+        this.db = fongo.getDatabase(dbName);
         
         //this.initializeState();
         
@@ -66,7 +66,7 @@ public class FongoWrapper implements MongoInstance {
     }
 
     @Override
-    public DB getDB() {
+    public MongoDatabase getDB() {
         return this.db;
     }
 	
