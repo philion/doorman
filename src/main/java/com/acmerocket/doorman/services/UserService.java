@@ -19,6 +19,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import org.bson.types.ObjectId;
+import org.jvnet.hk2.annotations.Service;
 
 import com.acmerocket.doorman.model.User;
 import com.acmerocket.doorman.mongo.AbstractMorphiaService;
@@ -28,7 +29,7 @@ import com.acmerocket.doorman.mongo.MongoInstance;
  * @author philion
  *
  */
-@Singleton
+@Service @Singleton
 public class UserService extends AbstractMorphiaService<User> {
     @Inject
     public UserService(MongoInstance mongo) {

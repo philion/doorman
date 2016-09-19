@@ -57,7 +57,8 @@ public class AutoConfigBundle<T extends Configuration> implements ConfiguredBund
         ConfigurationBuilder reflectionCfg = new ConfigurationBuilder();
         reflectionCfg.addUrls(ClasspathHelper.forPackage(packageName));
         reflectionCfg.filterInputsBy(filterBuilder).setScanners(new SubTypesScanner(), new TypeAnnotationsScanner());
-        reflections = new Reflections(reflectionCfg);        
+        reflections = new Reflections(reflectionCfg);
+        LOG.debug("Configured with {}", reflections);
     }
 
 //    public static <T extends Configuration> Builder<T> newBuilder() {
@@ -66,11 +67,13 @@ public class AutoConfigBundle<T extends Configuration> implements ConfiguredBund
 
     @Override
     public void initialize(final Bootstrap<?> bootstrap) {
-        LOG.debug("Intialzing auto config bundle.");
+        LOG.debug("Intialzing with {}", bootstrap);
     }
 
     @Override
     public void run(final T configuration, final Environment environment) throws Exception {
+        LOG.debug("Running with config={}", configuration);
+
         registerConfigurationProvider(configuration, environment);
         registerServices(environment);
         registerResources(environment);

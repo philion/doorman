@@ -9,7 +9,7 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
 
 
-public class FongoWrapper implements MongoInstance {
+public class FongoWrapper /*implements MongoInstance*/ {
     private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(FongoWrapper.class);
 
     private static final String DB_NAME = "test";
@@ -54,17 +54,17 @@ public class FongoWrapper implements MongoInstance {
 //		}
 //	}
 
-    @Override
+    //@Override
     public Datastore getDatastore() {
         return this.datastore;
     }
 
-    @Override
+    //@Override
     public MongoClient getClient() {
         return this.client;
     }
 
-    @Override
+    //@Override
     public MongoDatabase getDB() {
         return this.db;
     }
@@ -82,7 +82,7 @@ public class FongoWrapper implements MongoInstance {
 //	    };
 //	}
 
-    @Override
+    //@Override
     public void ensureIndexes() {
         // TODO: DRY
         this.datastore.ensureIndexes();

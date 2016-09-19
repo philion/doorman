@@ -1,8 +1,8 @@
 package com.acmerocket.doorman.mongo;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
+import org.jvnet.hk2.annotations.Service;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import org.slf4j.Logger;
@@ -13,7 +13,7 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoDatabase;
 
-@Singleton
+@Service
 public class MongoWrapper implements MongoInstance {
     private static final Logger LOG = LoggerFactory.getLogger(MongoWrapper.class);
     static {
