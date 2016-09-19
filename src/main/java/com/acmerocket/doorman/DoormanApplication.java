@@ -6,9 +6,9 @@ import org.eclipse.jetty.server.Server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.acmerocket.doorman.mongo.MongoWrapper;
 import com.acmerocket.doorman.resources.UsersResource;
 import com.acmerocket.doorman.services.UserService;
+import com.acmerocket.doorman.test.rest.FongoWrapper;
 
 import io.dropwizard.Application;
 import io.dropwizard.lifecycle.ServerLifecycleListener;
@@ -45,8 +45,9 @@ public class DoormanApplication extends Application<DoormanConfiguration> implem
     @Override
     public void run(final DoormanConfiguration config, final Environment environment) {
         // Think bundles!
-        environment.jersey().register(new UsersResource(new UserService(new MongoWrapper(config))));
-        //environment.healthChecks().register("fongo", FongoWrapper.healthCheck());
+        //environment.jersey().register(new UsersResource(new UserService(new MongoWrapper(config))));
+        environment.jersey().register(new UsersResource(new UserService(FongoWrapper.instance())));
+        environment.healthChecks().register("fongo", FongoWrapper.healthCheck());
     } 
 
     /**

@@ -13,7 +13,7 @@ import com.mongodb.client.MongoDatabase;
 public class FongoWrapper implements MongoInstance {
     private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(FongoWrapper.class);
 
-    private static final String DB_NAME = "TEST";
+    private static final String DB_NAME = "test";
     
     private static final FongoWrapper INSTANCE = new FongoWrapper();
     
