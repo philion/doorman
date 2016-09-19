@@ -6,9 +6,7 @@ import org.eclipse.jetty.server.Server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.acmerocket.doorman.resources.UsersResource;
-import com.acmerocket.doorman.services.UserService;
-import com.acmerocket.doorman.test.rest.FongoWrapper;
+import com.acmerocket.doorman.autoconf.AutoConfigBundle;
 
 import io.dropwizard.Application;
 import io.dropwizard.lifecycle.ServerLifecycleListener;
@@ -39,15 +37,20 @@ public class DoormanApplication extends Application<DoormanConfiguration> implem
 
     @Override
     public void initialize(final Bootstrap<DoormanConfiguration> bootstrap) {
-        // TODO: application initialization
+    	String packageName = this.getClass().getPackage().getName();
+    	LOG.info("Initializing autoConf with package={}", packageName);
+    	AutoConfigBundle<DoormanConfiguration> autoConf = new AutoConfigBundle<>(DoormanConfiguration.class, packageName);
+    	bootstrap.addBundle(autoConf);
     }
 
     @Override
     public void run(final DoormanConfiguration config, final Environment environment) {
+    	
+    	
         // Think bundles!
         //environment.jersey().register(new UsersResource(new UserService(new MongoWrapper(config))));
-        environment.jersey().register(new UsersResource(new UserService(FongoWrapper.instance())));
-        environment.healthChecks().register("fongo", FongoWrapper.healthCheck());
+        //environment.jersey().register(new UsersResource(new UserService(FongoWrapper.instance())));
+        //environment.healthChecks().register("fongo", FongoWrapper.healthCheck());
     } 
 
     /**

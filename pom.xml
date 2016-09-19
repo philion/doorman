@@ -55,13 +55,19 @@
 			<version>4.1</version>
 		</dependency>
 		<dependency>
-			<groupId>io.dropwizard</groupId>
-			<artifactId>dropwizard-testing</artifactId>
-			<scope>test</scope>
+			<groupId>org.reflections</groupId>
+			<artifactId>reflections</artifactId>
+			<version>0.9.10</version>
+			<exclusions>
+				<exclusion>
+					<groupId>com.google.guava</groupId>
+					<artifactId>guava</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>io.dropwizard</groupId>
-			<artifactId>dropwizard-client</artifactId>
+			<artifactId>dropwizard-testing</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>

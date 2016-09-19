@@ -4,7 +4,6 @@ import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 
 import com.acmerocket.doorman.mongo.MongoInstance;
-import com.codahale.metrics.health.HealthCheck;
 import com.github.fakemongo.Fongo;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
@@ -74,14 +73,14 @@ public class FongoWrapper implements MongoInstance {
         return INSTANCE;
 	}
 	
-	public static HealthCheck healthCheck() {
-	    return new HealthCheck() {
-            @Override
-            protected Result check() throws Exception {
-                return Result.healthy();
-            }
-	    };
-	}
+//	public static HealthCheck healthCheck() {
+//	    return new HealthCheck() {
+//            @Override
+//            protected Result check() throws Exception {
+//                return Result.healthy();
+//            }
+//	    };
+//	}
 
     @Override
     public void ensureIndexes() {
