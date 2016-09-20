@@ -1,11 +1,12 @@
 logging:
-  level: info
+  level: warn
   loggers:
-    com.acmerocket: debug
+    com.acmerocket: info    
   appenders:
     - type: console
       logFormat: "%d{yyyy-MM-dd HH:mm:ss} %-5level %42.42logger{42} - %msg%n"
 
 mongo:
   url: mongodb://localhost/test
+  mongoInstance: com.acmerocket.doorman.test.rest.FongoWrapper
 
