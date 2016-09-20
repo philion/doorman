@@ -37,13 +37,17 @@ public class DoormanApplication extends Application<DoormanConfiguration> implem
     public void initialize(final Bootstrap<DoormanConfiguration> bootstrap) {
     	String packageName = this.getClass().getPackage().getName();
     	LOG.info("Initializing autoConf with package={}", packageName);
-    	AutoConfigBundle<DoormanConfiguration> autoConf = new AutoConfigBundle<>(DoormanConfiguration.class, packageName);
-    	bootstrap.addBundle(autoConf);
+    	
+    	bootstrap.addBundle(new AutoConfigBundle<>(DoormanConfiguration.class, packageName));
     }
 
     @Override
     public void run(final DoormanConfiguration config, final Environment environment) {
-        LOG.info("Running...");
+        //LOG.info("Running...");
+        //String packageName = this.getClass().getPackage().getName();
+        //LOG.info("Initializing with package={}", packageName);
+        //environment.jersey().packages(packageName);
+
     } 
 
     /**

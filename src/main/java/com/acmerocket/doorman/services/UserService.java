@@ -21,9 +21,9 @@ import javax.inject.Singleton;
 import org.bson.types.ObjectId;
 import org.jvnet.hk2.annotations.Service;
 
+import com.acmerocket.doorman.DoormanConfiguration;
 import com.acmerocket.doorman.model.User;
 import com.acmerocket.doorman.mongo.AbstractMorphiaService;
-import com.acmerocket.doorman.mongo.MongoInstance;
 
 /**
  * @author philion
@@ -32,8 +32,8 @@ import com.acmerocket.doorman.mongo.MongoInstance;
 @Service @Singleton
 public class UserService extends AbstractMorphiaService<User> {
     @Inject
-    public UserService(MongoInstance mongo) {
-        super(mongo);
+    public UserService(DoormanConfiguration config) {
+        super(config.getMongo().getInstance()); // FIXME hacky. pick a model and stick with it. reall: make HK2 runtime/test work
     }
     
     public User get(String id) {

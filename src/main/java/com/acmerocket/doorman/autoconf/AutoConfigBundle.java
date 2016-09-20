@@ -61,23 +61,19 @@ public class AutoConfigBundle<T extends Configuration> implements ConfiguredBund
         LOG.debug("Configured with {}", reflections);
     }
 
-//    public static <T extends Configuration> Builder<T> newBuilder() {
-//        return new Builder<T>();
-//    }
-
     @Override
     public void initialize(final Bootstrap<?> bootstrap) {
-        LOG.debug("Intialzing with {}", bootstrap);
+        //LOG.debug("Intialzing with {}", bootstrap);
     }
 
     @Override
     public void run(final T configuration, final Environment environment) throws Exception {
-        LOG.debug("Running with config={}", configuration);
+        //LOG.debug("Running with config={}", configuration);
 
-        registerConfigurationProvider(configuration, environment);
-        registerServices(environment);
-        registerResources(environment);
-        registerHealthChecks(environment);
+        this.registerConfigurationProvider(configuration, environment);
+        this.registerServices(environment);
+        this.registerResources(environment);
+        this.registerHealthChecks(environment);
     }
 
     private void registerConfigurationProvider(final T configuration, final Environment environment) {
@@ -97,6 +93,7 @@ public class AutoConfigBundle<T extends Configuration> implements ConfiguredBund
             configMap = Collections.<String, Object> emptyMap();
         }
         // Don't include any of the default things.
+        // FIXME CONST
         final Set<String> blackListedConfigAttribute = new HashSet<String>();
         blackListedConfigAttribute.addAll(Arrays.asList("logging", "server", "metrics"));
 
@@ -141,25 +138,6 @@ public class AutoConfigBundle<T extends Configuration> implements ConfiguredBund
             }
         }
     }
-    
-//    public static class Builder<T extends Configuration> {
-//        private Class<T> klass;
-//        private String packageName;
-//        
-//        public Builder<T> addPackageName(final String packageName) {
-//            this.packageName = packageName;
-//            return this;
-//        }
-//
-//        public Builder<T> setConfigurationClass(final Class<T> klass) {
-//            this.klass = klass;
-//            return this;
-//        }
-//        
-//        public AutoConfigBundle<T> build() {
-//            return new AutoConfigBundle<T>(klass, packageName);
-//        }
-//    }
 
     class ServiceBinder extends AbstractBinder {
         final Set<Class<?>> klasses;

@@ -1,8 +1,5 @@
 package com.acmerocket.doorman.mongo;
 
-import javax.inject.Inject;
-
-import org.jvnet.hk2.annotations.Service;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import org.slf4j.Logger;
@@ -13,7 +10,6 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoDatabase;
 
-@Service
 public class MongoWrapper implements MongoInstance {
     private static final Logger LOG = LoggerFactory.getLogger(MongoWrapper.class);
     static {
@@ -23,12 +19,14 @@ public class MongoWrapper implements MongoInstance {
     private final MongoClient client;
     private final Datastore datastore;
     private final String dbName;
-
-    @Inject
+    
     public MongoWrapper(DoormanConfiguration config) {
-        MongoConfig mongo = config.getMongo();
-        this.dbName = mongo.getDatabase();
-        String url = mongo.getUrl();
+        this(config.getMongo());
+    }
+
+    public MongoWrapper(MongoConfig mongoConfig) {
+        this.dbName = mongoConfig.getDatabase();
+        String url = mongoConfig.getUrl();
         LOG.info("Configuring mongo with url={}", url);
         
         this.client = new MongoClient(new MongoClientURI(url));

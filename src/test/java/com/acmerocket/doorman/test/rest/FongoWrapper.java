@@ -3,25 +3,21 @@ package com.acmerocket.doorman.test.rest;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 
+import com.acmerocket.doorman.mongo.MongoConfig;
 import com.acmerocket.doorman.mongo.MongoInstance;
 import com.github.fakemongo.Fongo;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
 
-
-public class FongoWrapper /*implements MongoInstance*/ {
-    private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(FongoWrapper.class);
-
-    private static final String DB_NAME = "test";
-    
-    private static final FongoWrapper INSTANCE = new FongoWrapper();
+public class FongoWrapper implements MongoInstance {
+    private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(FongoWrapper.class);    
     
     private final MongoClient client;
     private final Datastore datastore;
     private final MongoDatabase db;
-
-    private FongoWrapper() {
-    	this(DB_NAME);
+    
+    public FongoWrapper(MongoConfig config) {
+        this(config.getDatabase());
     }
     
     private FongoWrapper(String dbName) {
@@ -54,33 +50,20 @@ public class FongoWrapper /*implements MongoInstance*/ {
 //		}
 //	}
 
-    //@Override
+    @Override
     public Datastore getDatastore() {
         return this.datastore;
     }
 
-    //@Override
+    @Override
     public MongoClient getClient() {
         return this.client;
     }
 
-    //@Override
+    @Override
     public MongoDatabase getDB() {
         return this.db;
     }
-	
-	public static final FongoWrapper instance() {
-        return INSTANCE;
-	}
-	
-//	public static HealthCheck healthCheck() {
-//	    return new HealthCheck() {
-//            @Override
-//            protected Result check() throws Exception {
-//                return Result.healthy();
-//            }
-//	    };
-//	}
 
     //@Override
     public void ensureIndexes() {

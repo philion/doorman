@@ -25,7 +25,7 @@ public class UserRestTest {
 
     @ClassRule
     public static final DropwizardAppRule<DoormanConfiguration> APP = 
-        new DropwizardAppRule<>(DoormanApplication.class, ResourceHelpers.resourceFilePath("local.yml"));
+        new DropwizardAppRule<>(DoormanApplication.class, ResourceHelpers.resourceFilePath("fongo.yml"));
         
     @Test
     public void test404() {
